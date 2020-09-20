@@ -1,8 +1,8 @@
 <?php
 
-include "Country.php";
+include "Cathedra.php";
 
-class CountryRepository {
+class CathedraRepository {
 
     protected $db;
 
