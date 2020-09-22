@@ -1,28 +1,25 @@
 <?php
-/*
-include "../models/ClientRepository.php";
+
+include "../models/DeviceRepository.php";
 
 $config = include("../db/config.php");
-$db = new PDO($config["db"], $config["username"], $config["password"]);
-$devices = new ClientRepository($db);
+//$db = new PDO($config["db"], $config["username"], $config["password"]);
+$db = new PDO("sqlite:../db/register.sqlite");
+$devices = new DeviceRepository($db);
 
 
 switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":
         $result = $devices->getAll(array(
-            "name" => $_GET["name"],
-            "date" => $_GET["date"],
-            "cathedra_id" => intval($_GET["cathedra_id"])
+            "serial" => $_GET["serial"],
+            "cathedraid" => intval($_GET["cathedraid"])
         ));
         break;
 
     case "POST":
         $result = $devices->insert(array(
-            "name" => $_POST["name"],
-            "age" => intval($_POST["age"]),
-            "date" => $_POST["date"],
-            "married" => $_POST["married"] === "true" ? 1 : 0,
-            "cathedra_id" => intval($_POST["cathedra_id"])
+            "serial" => $_POST["serial"],
+            "cathedraid" => intval($_POST["cathedraid"])
         ));
         break;
 
@@ -31,11 +28,8 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
         $result = $devices->update(array(
             "id" => intval($_PUT["id"]),
-            "name" => $_PUT["name"],
-            "age" => intval($_PUT["age"]),
-            "date" => $_PUT["date"],
-            "married" => $_PUT["married"] === "true" ? 1 : 0,
-            "cathedra_id" => intval($_PUT["cathedra_id"])
+            "serial" => $_PUT["serial"],
+            "cathedraid" => intval($_PUT["cathedraid"])
         ));
         break;
 
@@ -49,5 +43,4 @@ switch($_SERVER["REQUEST_METHOD"]) {
 
 header("Content-Type: application/json");
 echo json_encode($result);
- */
 ?>

@@ -50,7 +50,7 @@ $(function () {
                 }
             },
             fields: [
-                { name: "cathedra", title: "Кафедра", type: "select", width: 150, items: cathedras, valueField: "id", textField: "name" },
+                { name: "cathedraid", title: "Кафедра", type: "select", width: 150, items: cathedras, valueField: "id", textField: "name" },
                 { name: "type", title: "Тип", type: "select", width: 150 },
                 { name: "model", title: "Модель", type: "select", width: 150, filtering: true },
                 { name: "serial", title: "Серійний Номер", type: "text", width: 100 },
@@ -60,6 +60,9 @@ $(function () {
                 { name: "prevVeryf", title: "попередня повірка", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
                 { name: "nextVeryf", title: "Наступна повірка", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
                 { type: "control" }
+              
+//{ name: "cathedraid", title: "Кафедра", type: "text", width: 150},
+//{ type: "control" }
             ]
         });
 

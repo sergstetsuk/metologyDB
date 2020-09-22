@@ -20,7 +20,7 @@ class CathedraRepository {
     public function getAll() {
         $sql = "SELECT * FROM cathedras";
         $q = $this->db->prepare($sql);
-        $q->execute();
+        $q->execute([]);
         $rows = $q->fetchAll();
 
         $result = array();
