@@ -12,6 +12,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":
         $result = $devices->getAll(array(
             "serial" => $_GET["serial"],
+            "statusid" => $_GET["statusid"],
             "cathedraid" => intval($_GET["cathedraid"])
         ));
         break;
@@ -19,6 +20,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case "POST":
         $result = $devices->insert(array(
             "serial" => $_POST["serial"],
+            "statusid" => $_POST["statusid"],
             "cathedraid" => intval($_POST["cathedraid"])
         ));
         break;
@@ -29,6 +31,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         $result = $devices->update(array(
             "id" => intval($_PUT["id"]),
             "serial" => $_PUT["serial"],
+            "statusid" => $_PUT["statusid"],
             "cathedraid" => intval($_PUT["cathedraid"])
         ));
         break;

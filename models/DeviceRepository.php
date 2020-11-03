@@ -13,6 +13,7 @@ class DeviceRepository {
     private function read($row) {
         $result = new Device();
         $result->id = $row["id"];
+        $result->statusid = $row["statusid"];
         $result->serial = $row["serial"];
         $result->cathedraid = $row["cathedraid"];
         return $result;
@@ -30,17 +31,19 @@ class DeviceRepository {
     public function getAll($filter) {
         $serial = "%" . $filter["serial"] . "%";
         $cathedraid = $filter["cathedraid"];
-        if ($cathedraid != 0) {
-            $sql = "SELECT * FROM devices WHERE serial LIKE :serial AND (:cathedraid = 0 OR cathedraid = :cathedraid)";
+        $statusid = $filter["statusid"];
+ //       print_r($filter);
+        if ($cathedraid != 0 || $statusid != 0) {
+            $sql = "SELECT * FROM devices WHERE serial LIKE :serial AND (:statusid = 0 OR statusid = :statusid) AND (:cathedraid = 0 OR cathedraid = :cathedraid)";
             $q = $this->db->prepare($sql);
             $q->bindParam(":serial", $serial);
+            $q->bindParam(":statusid", $statusid);
             $q->bindParam(":cathedraid", $cathedraid);
        } else {
             $sql = "SELECT * FROM devices";
             $q = $this->db->prepare($sql);
         }
 
-//        $q->debugDumpParams();
 
         $q->execute();
         $rows = $q->fetchAll();
@@ -49,22 +52,25 @@ class DeviceRepository {
         foreach($rows as $row) {
             array_push($result, $this->read($row));
         }
+ //       $result["debug"] = $q->debugDumpParams();
         return $result;
     }
 
     public function insert($data) {
-        $sql = "INSERT INTO devices (serial, cathedraid) VALUES (:serial, :cathedraid)";
+        $sql = "INSERT INTO devices (serial, statusid, cathedraid) VALUES (:serial, :statusid, :cathedraid)";
         $q = $this->db->prepare($sql);
         $q->bindParam(":serial", $data["serial"]);
+        $q->bindParam(":statusid", $data["statusid"]);
         $q->bindParam(":cathedraid", $data["cathedraid"], PDO::PARAM_INT);
         $q->execute();
         return $this->getById($this->db->lastInsertId());
     }
 
     public function update($data) {
-        $sql = "UPDATE devices SET serial = :serial, cathedraid = :cathedraid WHERE id = :id";
+        $sql = "UPDATE devices SET status = :status, serial = :serial, cathedraid = :cathedraid WHERE id = :id";
         $q = $this->db->prepare($sql);
         $q->bindParam(":serial", $data["serial"]);
+        $q->bindParam(":status", $data["status"]);
         $q->bindParam(":cathedraid", $data["cathedraid"], PDO::PARAM_INT);
         $q->bindParam(":id", $data["id"], PDO::PARAM_INT);
         $q->execute();
