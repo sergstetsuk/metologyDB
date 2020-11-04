@@ -13,9 +13,15 @@ class DeviceRepository {
     private function read($row) {
         $result = new Device();
         $result->id = $row["id"];
-        $result->statusid = $row["statusid"];
-        $result->serial = $row["serial"];
         $result->cathedraid = $row["cathedraid"];
+        $result->typeid = $row["typeid"];
+        $result->modelid = $row["modelid"];
+        $result->serial = $row["serial"];
+        $result->datemanufacture = $row["datemanufacture"];
+        $result->dateaccept = $row["dateaccept"];
+        $result->statusid = $row["statusid"];
+        $result->lastverify = $row["lastverify"];
+        $result->nextverify = $row["nextverify"];
         return $result;
     }
 
@@ -31,18 +37,33 @@ class DeviceRepository {
     public function getAll($filter) {
         $serial = "%" . $filter["serial"] . "%";
         $cathedraid = $filter["cathedraid"];
+        $typeid = $filter["typeid"];
+        $modelid = $filter["modelid"];
         $statusid = $filter["statusid"];
- //       print_r($filter);
-        if ($cathedraid != 0 || $statusid != 0) {
-            $sql = "SELECT * FROM devices WHERE serial LIKE :serial AND (:statusid = 0 OR statusid = :statusid) AND (:cathedraid = 0 OR cathedraid = :cathedraid)";
-            $q = $this->db->prepare($sql);
-            $q->bindParam(":serial", $serial);
-            $q->bindParam(":statusid", $statusid);
-            $q->bindParam(":cathedraid", $cathedraid);
-       } else {
-            $sql = "SELECT * FROM devices";
-            $q = $this->db->prepare($sql);
-        }
+        //print_r($filter);
+        $sql = "SELECT *, lastverify as nextverify FROM devices";
+	$sql .= " LEFT JOIN devicemodels ON devicemodels.id = devices.modelid";
+	$sql .=	" WHERE serial LIKE :serial";
+        if ($cathedraid != 0)
+	    $sql .= " AND cathedraid = :cathedraid";
+        if ($typeid != 0)
+	    $sql .= " AND typeid = :typeid";
+        if ($modelid != 0)
+	    $sql .= " AND modelid = :modelid";
+        if ($statusid != 0)
+	    $sql .= " AND statusid = :statusid";
+
+        $q = $this->db->prepare($sql);
+
+	$q->bindParam(":serial", $serial);
+        if ($cathedraid != 0)
+	    $q->bindParam(":cathedraid", $cathedraid);
+        if ($typeid != 0)
+	    $q->bindParam(":typeid", $typeid);
+        if ($modelid != 0)
+	    $q->bindParam(":modelid", $modelid);
+        if ($statusid != 0)
+	    $q->bindParam(":statusid", $statusid);
 
 
         $q->execute();

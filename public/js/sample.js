@@ -38,10 +38,10 @@ $(function () {
     function start_engine() {
         if (cathedras && statuses && devicetypes && devicemodels) {
 
-            statuses.unshift({ id: "0", name: "<none>" });
-            devicetypes.unshift({ id: "0", name: "<none>" });
-            devicemodels.unshift({ id: "0", name: "<none>" });
-            cathedras.unshift({ id: "0", name: "<none>" });
+            statuses.unshift({ id: "0", name: "----" });
+            devicetypes.unshift({ id: "0", name: "----" });
+            devicemodels.unshift({ id: "0", name: "----" });
+            cathedras.unshift({ id: "0", name: "----" });
 
             $("#jsGrid").jsGrid({
                 height: "70%",
@@ -87,14 +87,14 @@ $(function () {
                 },
                 fields: [
                     { name: "cathedraid", title: "Кафедра", type: "select", width: 150, items: cathedras, valueField: "id", textField: "name", filtering: true },
-                    { name: "type", title: "Тип", type: "select", width: 100, items: devicetypes, valueField: "id", textField: "name" },
-                    { name: "model", title: "Модель", type: "select", width: 150, items: devicemodels, valueField: "id", textField: "name", filtering: true },
+                    { name: "typeid", title: "Тип", type: "select", width: 100, items: devicetypes, valueField: "id", textField: "name" },
+                    { name: "modelid", title: "Модель", type: "select", width: 150, items: devicemodels, valueField: "id", textField: "name", filtering: true },
                     { name: "serial", title: "Серійний Номер", type: "text", width: 100 },
-                    { name: "manufacture", title: "Дата виробництва", type: "text", sorting: true, filtering: true },
-                    { name: "dateIntoEx", title: "Введення в експлуатацію", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
+                    { name: "datemanufacture", title: "Дата виробництва", type: "text", sorting: true, filtering: true },
+                    { name: "dateaccept", title: "Введення в експлуатацію", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
                     { name: "statusid", title: "Статус", type: "select", width: 100, items: statuses, valueField: "id", textField: "name" },
-                    { name: "prevVeryf", title: "попередня повірка", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
-                    { name: "nextVeryf", title: "Наступна повірка", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
+                    { name: "lastverify", title: "попередня повірка", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
+                    { name: "nextverify", title: "Наступна повірка", type: "text", width: 100, items: cathedras, valueField: "id", textField: "name" },
                     { type: "control" }
 
                     //{ name: "cathedraid", title: "Кафедра", type: "text", width: 150},

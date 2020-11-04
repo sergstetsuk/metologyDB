@@ -12,15 +12,21 @@ switch($_SERVER["REQUEST_METHOD"]) {
     case "GET":
         $result = $devices->getAll(array(
             "serial" => $_GET["serial"],
-            "statusid" => $_GET["statusid"],
-            "cathedraid" => intval($_GET["cathedraid"])
+            "cathedraid" => intval($_GET["cathedraid"]),
+            "typeid" => intval($_GET["typeid"]),
+            "modelid" => intval($_GET["modelid"]),
+            "datemanufacture" => $_GET["datemanufacture"],
+            "dateaccept" => $_GET["dateaccept"],
+            "statusid" => intval($_GET["statusid"]),
+            "lastverify" => $_GET["lastverify"],
+            "nextverify" => $_GET["nextverify"]
         ));
         break;
 
     case "POST":
         $result = $devices->insert(array(
             "serial" => $_POST["serial"],
-            "statusid" => $_POST["statusid"],
+            "statusid" => intval($_POST["statusid"]),
             "cathedraid" => intval($_POST["cathedraid"])
         ));
         break;
@@ -31,7 +37,7 @@ switch($_SERVER["REQUEST_METHOD"]) {
         $result = $devices->update(array(
             "id" => intval($_PUT["id"]),
             "serial" => $_PUT["serial"],
-            "statusid" => $_PUT["statusid"],
+            "statusid" => intval($_PUT["statusid"]),
             "cathedraid" => intval($_PUT["cathedraid"])
         ));
         break;
