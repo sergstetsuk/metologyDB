@@ -39,11 +39,19 @@ class DeviceRepository {
         $cathedraid = $filter["cathedraid"];
         $typeid = $filter["typeid"];
         $modelid = $filter["modelid"];
+        $datemanufacture = $filter["datemanufacture"] . "%";
+        $dateaccept = $filter["dateaccept"] . "%";
         $statusid = $filter["statusid"];
+        $lastverify = $filter["lastverify"] . "%";
+        $nextverify = $filter["nextverify"] . "%";
         //print_r($filter);
         $sql = "SELECT *, lastverify as nextverify FROM devices";
 	$sql .= " LEFT JOIN devicemodels ON devicemodels.id = devices.modelid";
 	$sql .=	" WHERE serial LIKE :serial";
+	$sql .= " AND datemanufacture LIKE :datemanufacture";
+	$sql .= " AND dateaccept LIKE :dateaccept";
+//	$sql .= " AND lastverify LIKE :lastverify";
+//	$sql .= " AND nextverify LIKE :nextverify";
         if ($cathedraid != 0)
 	    $sql .= " AND cathedraid = :cathedraid";
         if ($typeid != 0)
@@ -56,6 +64,10 @@ class DeviceRepository {
         $q = $this->db->prepare($sql);
 
 	$q->bindParam(":serial", $serial);
+	$q->bindParam(":datemanufacture", $datemanufacture);
+	$q->bindParam(":dateaccept", $dateaccept);
+//	$q->bindParam(":lastverify", $lastverify);
+//	$q->bindParam(":nextverify", $nextverify);
         if ($cathedraid != 0)
 	    $q->bindParam(":cathedraid", $cathedraid);
         if ($typeid != 0)
